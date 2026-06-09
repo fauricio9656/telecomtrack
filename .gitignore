@@ -1,0 +1,43 @@
+# ── Java / Maven / Gradle ──────────────────────
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+out/
+
+# ── NetBeans ────────────────────────────────────
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ── IntelliJ IDEA ───────────────────────────────
+.idea/
+*.iml
+*.iws
+
+# ── Eclipse ─────────────────────────────────────
+.classpath
+.project
+.settings/
+
+# ── VS Code ─────────────────────────────────────
+.vscode/
+
+# ── Configuración local (credenciales) ──────────
+src/main/resources/hibernate.cfg.xml
+*.env
+local.properties
+db.properties
+
+# ── Sistema operativo ───────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs ────────────────────────────────────────
+*.log
+logs/
