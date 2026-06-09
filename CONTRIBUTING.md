@@ -1,16 +1,17 @@
 # Acuerdo de Trabajo — TelecomTrack
 
-## 🌿 Estrategia de ramas (Git Flow simplificado)
+## Estrategia de ramas
 
-| Rama | Propósito | Quién escribe |
+| Rama | Proposito | Quien escribe |
 |------|-----------|---------------|
-| `main` | Código estable, entregable. Solo se actualiza via PR aprobado | Nadie directamente |
-| `develop` | Rama de integración. Las features se fusionan aquí primero | Todo el equipo |
-| `feature/<hu-id>-<descripcion>` | Una historia de usuario o tarea | El responsable |
-| `fix/<descripcion>` | Corrección de bug | El que lo detecta |
-| `release/avance-<n>` | Preparación de un avance para entrega | Líder técnico |
+| `main` | Codigo estable y entregable. Solo se actualiza via Pull Request aprobado | Nadie directamente |
+| `develop` | Rama de integracion. Todas las features se fusionan aqui primero | Todo el equipo |
+| `feature/<hu-id>-<descripcion>` | Desarrollo de una historia de usuario especifica | El responsable |
+| `fix/<descripcion>` | Correccion de errores | El que lo detecta |
+| `release/avance-<n>` | Preparacion de entrega de avance | Lider tecnico |
 
 ### Ejemplos de nombres de rama
+
 ```
 feature/hu-01-catalogo-herramientas
 feature/hu-04-solicitud-materiales
@@ -20,69 +21,70 @@ release/avance-1
 
 ---
 
-## ✍️ Convenciones de commits
+## Convenciones de commits
 
-Usamos **Conventional Commits** (https://www.conventionalcommits.org/):
+Se utiliza la especificacion Conventional Commits (https://www.conventionalcommits.org/):
 
 ```
-<tipo>(<alcance>): <descripción corta en minúsculas>
+<tipo>(<alcance>): <descripcion corta en minusculas>
 ```
 
-| Tipo | Cuándo usarlo |
+| Tipo | Cuando usarlo |
 |------|--------------|
 | `feat` | Nueva funcionalidad |
-| `fix` | Corrección de bug |
-| `docs` | Solo documentación |
-| `style` | Formato, sin cambio lógico |
-| `refactor` | Refactorización sin nueva feature ni fix |
+| `fix` | Correccion de bug |
+| `docs` | Solo documentacion |
+| `style` | Formato, sin cambio logico |
+| `refactor` | Refactorizacion sin nueva feature ni fix |
 | `test` | Agregar o corregir tests |
-| `chore` | Tareas de build, dependencias |
+| `chore` | Tareas de build o dependencias |
 
 ### Ejemplos
-```bash
-feat(inventario): agregar registro de herramienta con código único
-fix(solicitud): corregir validación de cantidad al aprobar
-docs(readme): actualizar instrucciones de instalación
+
+```
+feat(inventario): agregar registro de herramienta con codigo unico
+fix(solicitud): corregir validacion de cantidad al aprobar
+docs(readme): actualizar instrucciones de instalacion
 ```
 
 ---
 
-## 🔄 Flujo de trabajo
+## Flujo de trabajo
 
 ```
-1. Tomar una HU del backlog
+1. Tomar una historia de usuario del backlog
 2. git checkout develop && git pull
 3. git checkout -b feature/hu-XX-descripcion
-4. Desarrollar + commits frecuentes
+4. Desarrollar con commits frecuentes y descriptivos
 5. git push origin feature/hu-XX-descripcion
-6. Abrir Pull Request hacia develop
-7. Mínimo 1 revisión aprobada antes de fusionar
+6. Abrir Pull Request hacia develop en GitHub
+7. Minimo 1 revision aprobada antes de fusionar
 8. Eliminar la rama feature tras el merge
 ```
 
 ---
 
-## ✅ Checklist antes de abrir un Pull Request
+## Checklist antes de abrir un Pull Request
 
-- [ ] El código compila sin errores
-- [ ] No hay credenciales ni contraseñas hardcodeadas
-- [ ] Los nombres de clases, métodos y variables están en inglés o español consistente
-- [ ] Se actualizó la documentación si aplica
-- [ ] Se probó manualmente el flujo principal
-
----
-
-## 🚫 Reglas
-
-- **No hacer push directo a `main`** — siempre PR
-- **No commitear archivos de IDE** (.idea/, nbproject/, *.iml) — están en .gitignore
-- **No commitear credenciales** — usar variables de entorno o archivo local no versionado
-- **Resolver conflictos en la rama feature**, no en develop
+- [ ] El codigo compila sin errores
+- [ ] No hay credenciales ni contrasenas en el codigo
+- [ ] Los nombres de clases y metodos son consistentes
+- [ ] Se actualizo la documentacion si aplica
+- [ ] Se probo manualmente el flujo principal
 
 ---
 
-## 📞 Coordinación
+## Reglas del equipo
 
-- Reuniones: según acuerdo del equipo (mínimo 1 por semana)
-- Issues de GitHub para registrar bugs y tareas
-- PR description debe referenciar la HU: `Cierra HU-04`
+- No hacer push directo a main — siempre mediante Pull Request
+- No subir archivos de IDE (.idea/, nbproject/, *.iml) — incluidos en .gitignore
+- No subir credenciales — usar archivo local no versionado
+- Resolver conflictos en la rama feature, no en develop
+- Las Pull Requests deben referenciar la historia: Cierra HU-04
+
+---
+
+## Coordinacion
+
+- Usar Issues de GitHub para registrar tareas y bugs
+- Revision semanal del estado del proyecto
