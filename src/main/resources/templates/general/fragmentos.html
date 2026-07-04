@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="#{plantilla.titulo}"></title>
+
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet">
+
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}"
+          rel="stylesheet">
+</head>
+
+<header th:fragment="header">
+</header>
+
+<footer th:fragment="footer">
+</footer>
+
+<div th:fragment="scripts">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</div>
+
+</html>
