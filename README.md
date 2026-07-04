@@ -18,12 +18,12 @@ TelecomTrack busca centralizar ese proceso mediante una aplicación web con inve
 
 ## 🚧 Estado del Proyecto
 
-Estado actual: **preparación del Avance 2**.
+Estado actual: **desarrollo del Avance 2**.
 
 | Entrega | Estado |
 |---|---|
 | Avance 1 | Finalizado |
-| Avance 2 | En preparación |
+| Avance 2 | En desarrollo |
 | Entrega final y defensa | Planificada |
 
 ---
@@ -76,10 +76,45 @@ Las responsabilidades se asignan y actualizan en cada avance según el backlog a
 
 | Integrante | GitHub | Responsabilidad actual |
 |---|---|---|
-| Allan Fauricio Fonseca Batista | [@fauricio9656](https://github.com/fauricio9656) | Pendiente de asignación para el Avance 2 |
-| Carlos Roberto Pérez Rodríguez | [@ZerepSolrac412](https://github.com/ZerepSolrac412) | Pendiente de asignación para el Avance 2 |
-| Sebastián Segura Camacho | [@SebastianSC11](https://github.com/SebastianSC11) | Pendiente de asignación para el Avance 2 |
-| Alberto Manuel Zúñiga Sánchez | [@BETOXPROGRAMING](https://github.com/BETOXPROGRAMING) | Pendiente de asignación para el Avance 2 |
+| Allan Fauricio Fonseca Batista | [@fauricio9656](https://github.com/fauricio9656) | Issue #4 — Materiales y control de stock |
+| Carlos Roberto Pérez Rodríguez | [@ZerepSolrac412](https://github.com/ZerepSolrac412) | Issue #3 — Gestión de herramientas |
+| Sebastián Segura Camacho | [@SebastianSC11](https://github.com/SebastianSC11) | Issue #5 — Solicitudes e historial del técnico |
+| Alberto Manuel Zúñiga Sánchez | [@BetoxPrograming](https://github.com/BetoxPrograming) | Issues #1 y #2 — Configuración base, usuarios, autenticación y roles |
+
+---
+
+## 🔀 Flujo de Desarrollo del Avance 2
+
+El trabajo del Avance 2 está organizado mediante el milestone **Avance 2 — Implementación funcional del 50%** y cinco issues asignados entre los integrantes.
+
+La rama `main` contiene únicamente versiones estables y entregables. La rama `develop` se utiliza para integrar y probar el trabajo del equipo antes de actualizar `main`.
+
+El flujo establecido es:
+
+```text
+main
+└── develop
+    ├── chore/project-foundation
+    ├── feature/hu-10-user-security
+    ├── feature/tools-management
+    ├── feature/materials-stock
+    └── feature/requests-history
+```
+
+Cada rama de trabajo debe crearse desde la versión más reciente de `develop`.
+
+Al completar un issue:
+
+1. El responsable publica su rama.
+2. Abre un pull request hacia `develop`.
+3. Relaciona el pull request con su issue mediante `Closes #<número>`.
+4. Documenta las pruebas realizadas y cualquier limitación conocida.
+5. Solicita la revisión correspondiente.
+6. Atiende las observaciones antes de la integración.
+
+Los pull requests creados por otros integrantes requieren la aprobación de **@BetoxPrograming**, administrador del flujo de integración. Los pull requests creados por **@BetoxPrograming** requieren la aprobación de al menos otro integrante.
+
+Cuando todos los issues del milestone estén integrados y el sistema haya sido probado, se abrirá un pull request final desde `develop` hacia `main`.
 
 ---
 
