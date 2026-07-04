@@ -13,7 +13,8 @@ Esta guía define cómo se planifica, desarrolla, revisa e integra el trabajo de
 | Regla | Aplicación |
 |---|---|
 | Respetar el alcance | No agregar tecnologías, dependencias, arquitecturas o formas de implementación no autorizadas por el curso. |
-| No trabajar en `main` | Todo cambio debe realizarse en una rama independiente. |
+| No trabajar directamente en `main` | `main` contiene únicamente versiones estables y entregables. |
+| No trabajar directamente en `develop` | Todo cambio debe ingresar a `develop` mediante una rama y un pull request aprobado. |
 | Mantener cambios enfocados | Una rama y un pull request deben atender un objetivo concreto. |
 | Conservar la trazabilidad | Cada integrante debe trabajar y confirmar cambios desde su propia cuenta. |
 | Verificar antes de integrar | El código debe compilar, ejecutarse y conservar el funcionamiento existente. |
@@ -27,13 +28,13 @@ Esta guía define cómo se planifica, desarrolla, revisa e integra el trabajo de
 
 ## 🧩 Uso de Issues
 
-Los issues se utilizan inicialmente para asignar las tareas del backlog. También pueden emplearse para errores, dudas, documentación o mejoras.
+Los issues se utilizan para asignar y documentar las tareas del backlog, errores, dudas, documentación o mejoras.
 
-Su uso posterior es recomendado, pero no obligatorio para cambios pequeños acordados por todo el equipo.
+Durante el Avance 2, todo cambio funcional, estructural o de configuración debe estar relacionado con un issue asignado. Cada issue debe desarrollarse en una rama independiente y completarse mediante un pull request hacia `develop`.
 
 ### 📝 Estructura de un Buen Issue
 
-```markdown
+
 ## Objetivo
 
 Explicar qué debe resolverse.
@@ -54,7 +55,7 @@ Explicar cómo se comprobará que la tarea funciona.
 ## Dependencias
 
 Indicar si requiere otra tarea o cambio previo.
-```
+
 
 ### 🏷️ Títulos Recomendados
 
@@ -85,9 +86,23 @@ Cada issue debe asignarse al integrante responsable antes de comenzar el desarro
 
 ## 🌿 Flujo de Ramas
 
-La rama `main` representa la versión estable e integrable del proyecto.
+La rama `main` representa la versión estable y entregable del proyecto.
 
-Está prohibido desarrollar, corregir archivos o hacer push directamente sobre `main`.
+La rama `develop` se utiliza para integrar, revisar y probar los cambios correspondientes al milestone activo antes de actualizar `main`.
+
+Está prohibido desarrollar, corregir archivos o hacer push directamente sobre `main` o `develop`. Todo cambio debe realizarse en una rama creada desde la versión más reciente de `develop`.
+
+El flujo general es:
+
+```text
+main
+└── develop
+    ├── chore/project-foundation
+    ├── feat/hu-10-user-security
+    ├── feat/tools-management
+    ├── feat/materials-stock
+    └── feat/requests-history
+```
 
 ### 🧭 Nombres de Rama
 
@@ -108,6 +123,18 @@ refactor/organizar-servicio-material
 test/validar-solicitud
 chore/configurar-proyecto
 ```
+
+Para el Avance 2 se utilizarán las siguientes ramas:
+
+```text
+chore/project-foundation
+feat/hu-10-user-security
+feat/tools-management
+feat/materials-stock
+feat/requests-history
+```
+
+Cada rama debe crearse desde develop y debe corresponder con el issue asignado.
 
 Tipos permitidos:
 
@@ -141,20 +168,19 @@ arreglos
 - Confirmar que no exista otra persona trabajando en lo mismo.
 - Revisar sus criterios de aceptación y dependencias.
 
-### 2️⃣ Actualizar `main`
+### 2️⃣ Actualizar `develop`
 
 ```bash
-git switch main
-git pull origin main
+git switch develop
+git pull origin develop
 ```
 
 ### 3️⃣ Crear la Rama
+La rama debe crearse desde la versión más reciente de `develop` y utilizar el nombre indicado en el issue.
 
 ```bash
 git switch -c feat/hu-01-catalogo-herramientas
 ```
-
-La rama debe crearse desde la versión más reciente de `main`.
 
 ### 4️⃣ Desarrollar y Revisar
 
@@ -208,9 +234,9 @@ git push -u origin feat/hu-01-catalogo-herramientas
 
 ### 7️⃣ Abrir el Pull Request
 
-El pull request debe apuntar hacia `main` y explicar:
+El pull request debe apuntar desde la rama de trabajo hacia `develop` y explicar:
 
-```markdown
+
 ## Resumen
 
 Qué se completó.
@@ -231,11 +257,12 @@ Cómo se comprobó el funcionamiento.
 ## Issue Relacionado
 
 Closes #numero
+El uso de `Closes #numero` permite que GitHub cierre automáticamente el issue cuando el pull request sea integrado.
 
 ## Limitaciones
 
 Limitaciones conocidas o `Ninguna`.
-```
+
 
 El título debe seguir el mismo formato de los commits:
 
@@ -260,6 +287,9 @@ Limitaciones conocidas:
 
 También deben asignarse revisores dentro del pull request.
 
+Los pull requests creados por Allan, Carlos o Sebastián deben asignar obligatoriamente a `@BetoxPrograming` como revisor.
+Los pull requests creados por `@BetoxPrograming` deben asignar al menos a otro integrante del equipo como revisor.
+
 ### 9️⃣ Revisar y Probar
 
 La revisión debe comprobar:
@@ -279,28 +309,53 @@ El autor debe atender todas las observaciones antes de solicitar una nueva revis
 
 Todo pull request debe ser comunicado al grupo.
 
+Los pull requests creados por Allan, Carlos o Sebastián solamente pueden integrarse después de recibir la aprobación formal de `@BetoxPrograming`, responsable de administrar la integración del proyecto.
+
+Los pull requests creados por `@BetoxPrograming` requieren la aprobación formal de al menos otro integrante del equipo.
+
 El merge solamente puede realizarse cuando:
 
 - El cambio está completo.
+- El pull request apunta hacia `develop`.
+- El issue correspondiente está relacionado mediante `Closes #numero`.
 - La validación fue documentada.
-- Existe al menos una aprobación formal de otro integrante en GitHub.
-- El equipo confirma que el cambio puede integrarse.
-- No existen conversaciones pendientes ni conflictos.
+- Existe la aprobación formal requerida en GitHub.
+- No existen conversaciones pendientes.
+- No existen conflictos con `develop`.
+- El código compila y ejecuta correctamente.
+- Los criterios de aceptación del issue fueron comprobados.
 
-Los cambios que afecten seguridad, roles, base de datos, transacciones, dependencias, navegación principal o estructura del proyecto requieren aprobación explícita de todo el equipo.
+El autor debe atender todas las observaciones antes de solicitar una nueva revisión.
 
-El autor no debe integrar su propio cambio sin cumplir estas condiciones.
+Ningún autor puede aprobar su propio pull request.
 
 ### 1️⃣1️⃣ Sincronizar el Entorno
 
-Después del merge:
+Después de integrar un pull request en `develop`, todos los integrantes deben actualizar su entorno:
 
 ```bash
-git switch main
-git pull origin main
+git switch develop
+git pull origin develop
 ```
 
+Las ramas que continúen en desarrollo deben incorporar los cambios recientes de develop antes de abrir su pull request.
+
 La rama integrada puede eliminarse cuando el equipo confirme que el cambio quedó estable.
+
+### 1️⃣2️⃣ Integrar el Milestone en `main`
+
+Cuando todos los issues del milestone estén completados, integrados y probados, se debe abrir un pull request desde `develop` hacia `main`.
+
+Este pull request final debe incluir:
+
+- Resumen de las historias implementadas.
+- Lista de issues completados.
+- Evidencia de compilación y ejecución.
+- Resultado de las pruebas integradas.
+- Limitaciones conocidas.
+- Confirmación de que el README refleja el estado real del proyecto.
+
+El pull request de `develop` hacia `main` solamente puede integrarse cuando la versión sea estable y esté lista para entregarse.
 
 ---
 
@@ -330,6 +385,10 @@ También debe verificarse manualmente, según el cambio:
 - Los roles no acceden a funciones no autorizadas.
 - Bootstrap y Thymeleaf se utilizan conforme a lo trabajado en clase.
 - No se introdujeron tecnologías o dependencias no aprobadas.
+- El pull request apunta hacia `develop`.
+- El issue correspondiente está relacionado mediante `Closes #numero`.
+- El revisor obligatorio fue asignado.
+- La rama incorpora los cambios más recientes de `develop`.
 
 Para cambios únicamente documentales:
 
@@ -343,7 +402,10 @@ Para cambios únicamente documentales:
 
 No se aceptarán contribuciones que:
 
-- Trabajen directamente sobre `main`.
+- Trabajen directamente sobre `main` o `develop`.
+- Integren cambios en `develop` sin un pull request aprobado.
+- Abran pull requests funcionales directamente hacia `main`.
+- Aprueben o integren su propio pull request sin la revisión requerida.
 - Sustituyan Spring Boot, Thymeleaf, Bootstrap, Hibernate/JPA o la estructura MVC requerida.
 - Incorporen Bootstrap de una forma distinta a la vista en clase.
 - Agreguen dependencias no revisadas y aprobadas por el equipo.
@@ -368,4 +430,8 @@ Una contribución puede integrarse cuando:
 - Incluye validación suficiente.
 - Mantiene commits claros y trazables.
 - No afecta negativamente el trabajo de otros integrantes.
+- Está relacionada con un issue asignado.
+- Fue desarrollada desde una rama creada a partir de `develop`.
+- Fue enviada mediante un pull request hacia `develop`.
+- Cuenta con la aprobación formal del revisor requerido.
 - Cumple el [Código de Conducta](CODE_OF_CONDUCT.md).
