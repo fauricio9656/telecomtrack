@@ -1,113 +1,137 @@
-# TelecomTrack
+# 📡 TelecomTrack
 
-Sistema web de inventario de herramientas y materiales para **Telecom Power Systems**
+Sistema web transaccional para gestionar herramientas y materiales de **Telecom Power Systems**, mejorar la trazabilidad del inventario y registrar las operaciones asociadas a proyectos y personal técnico.
 
----
-
-## Descripcion
-
-TelecomTrack es una aplicacion web que digitaliza el control de activos fisicos de Telecom Power Systems, empresa dedicada al diseno, instalacion y mantenimiento de infraestructura electrica y de telecomunicaciones.
-
-**Problema que resuelve:** Eliminar el uso de hojas de calculo y papel para controlar herramientas y materiales, evitando perdidas, duplicacion de compras y falta de trazabilidad.
+> [!IMPORTANT]
+> TelecomTrack es el proyecto final del curso **SC-403 Desarrollo de Aplicaciones Web y Patrones** de la Universidad Fidélitas.  
+> La implementación debe respetar las tecnologías, dependencias, estructura MVC y forma de codificación trabajadas durante el curso. Un cambio fuera de esos parámetros puede invalidar el avance correspondiente.
 
 ---
 
-## Equipo
+## 📋 Descripción
 
-| Nombre | Rol | GitHub |
-|--------|-----|--------|
-| Fauricio | Desarrollador / Lider tecnico | [@fauricio9656](https://github.com/fauricio9656) |
-| Carlos | Desarrollador | [@ZerepSolrac412](https://github.com/ZerepSolrac412) |
-| Sebastian | Desarrollador | [@SebastianSC11](https://github.com/SebastianSC11) |
-| Beto | Desarrollador | [@BETOXPROGRAMING](https://github.com/BETOXPROGRAMING) |
+Telecom Power Systems administra herramientas y materiales mediante hojas de cálculo y registros manuales. Esto dificulta conocer las existencias reales, identificar responsables, controlar las asignaciones y consultar el historial de movimientos.
+
+TelecomTrack busca centralizar ese proceso mediante una aplicación web con inventario, solicitudes, aprobaciones, devoluciones, proyectos, usuarios, roles y registros transaccionales.
 
 ---
 
-## Funcionalidades principales
+## 🚧 Estado del Proyecto
 
-- Gestion de catalogo de herramientas y materiales
-- Solicitud y aprobacion de salidas de inventario
-- Registro de devoluciones con estado del activo
-- Reportes de consumo por proyecto y tecnico
-- Alertas automaticas de stock minimo
-- Control de acceso por roles: Administrador, Bodeguero, Tecnico de Campo, Supervisor
+Estado actual: **preparación del Avance 2**.
 
----
-
-## Stack tecnologico
-
-| Capa | Tecnologia |
-|------|-----------|
-| Backend | Java 17 + Servlets |
-| Persistencia | Hibernate / JPA |
-| Base de datos | MySQL 8 |
-| Frontend | JSP + Bootstrap 5 |
-| Control de versiones | Git + GitHub |
-| IDE | NetBeans / IntelliJ IDEA |
+| Entrega | Estado |
+|---|---|
+| Avance 1 | Finalizado |
+| Avance 2 | En preparación |
+| Entrega final y defensa | Planificada |
 
 ---
 
-## Estructura del proyecto
+## 📦 Alcance por Entrega
 
-```
+### 1️⃣ Entrega 1 — Avance 1
+
+El primer avance definió el problema, el cliente, los usuarios, las historias de usuario, los criterios de aceptación, la priorización del backlog, el flujo de navegación, el modelo preliminar de datos y el prototipo inicial.
+
+La documentación de esta entrega se encuentra en [`docs/avance1/`](docs/avance1/).
+
+### 2️⃣ Entrega 2 — Avance 2
+
+El segundo avance debe demostrar una implementación funcional del proyecto e incluir:
+
+- Al menos el 50 % de las historias de usuario o los flujos de mayor prioridad completamente funcionales.
+- Proyecto Java con Spring Boot organizado en `domain`, `repository`, `service` y `controller`.
+- Vistas dinámicas con Thymeleaf.
+- Bootstrap incorporado según lo trabajado en clase.
+- Persistencia mediante Hibernate/JPA y una base de datos relacional.
+- CRUD de las entidades principales.
+- Navegación coherente con el prototipo del Avance 1.
+- Participación verificable de todos los integrantes mediante ramas, commits, revisiones y pull requests.
+- Instrucciones preliminares de configuración y ejecución.
+- Demostración del funcionamiento real del sistema.
+
+### 3️⃣ Entrega 3 — Artículo, Aplicación Final y Defensa
+
+La tercera entrega debe completar el alcance académico y técnico del proyecto:
+
+- Aplicación web transaccional terminada.
+- Base de datos con al menos ocho tablas y una tabla destinada a registrar transacciones.
+- Autenticación, roles y restricciones de acceso funcionales.
+- Internacionalización mediante archivos de idioma.
+- Integración de al menos seis temas desarrollados en el curso.
+- Una funcionalidad o tecnología adicional investigada por el equipo.
+- Script, respaldo o instrucciones para crear y poblar la base de datos.
+- Usuarios de prueba para los roles implementados.
+- README técnico actualizado.
+- Artículo científico en formato IEEE.
+- Evidencia final de colaboración en GitHub.
+- Presentación y demostración funcional durante la defensa.
+
+---
+
+## 👥 Equipo
+
+Las responsabilidades se asignan y actualizan en cada avance según el backlog aprobado por el equipo.
+
+| Integrante | GitHub | Responsabilidad actual |
+|---|---|---|
+| Allan Fauricio Fonseca Batista | [@fauricio9656](https://github.com/fauricio9656) | Pendiente de asignación para el Avance 2 |
+| Carlos Roberto Pérez Rodríguez | [@ZerepSolrac412](https://github.com/ZerepSolrac412) | Pendiente de asignación para el Avance 2 |
+| Sebastián Segura Camacho | [@SebastianSC11](https://github.com/SebastianSC11) | Pendiente de asignación para el Avance 2 |
+| Alberto Manuel Zúñiga Sánchez | [@BETOXPROGRAMING](https://github.com/BETOXPROGRAMING) | Pendiente de asignación para el Avance 2 |
+
+---
+
+## 🛠️ Tecnologías y Herramientas
+
+| Área | Tecnología o herramienta | Estado |
+|---|---|---|
+| Lenguaje | Java 21 | Preparación |
+| Framework | Spring Boot | Preparación |
+| Arquitectura | Modelo MVC | Preparación |
+| Vistas | HTML5, CSS y Thymeleaf | Preparación |
+| Interfaz | Bootstrap mediante WebJars | Preparación |
+| Persistencia | Spring Data JPA e Hibernate | Preparación |
+| Base de datos | MySQL | Preparación |
+| Construcción | Maven Wrapper | Preparación |
+| Control de versiones | Git y GitHub | En uso |
+| Prototipado | Figma | Utilizado en el Avance 1 |
+
+> [!NOTE]
+> Las tecnologías marcadas como **Preparación** se actualizarán cuando su implementación quede integrada y validada en la rama principal.
+
+---
+
+## 🗂️ Estructura del Repositorio
+
+```text
 telecomtrack/
 ├── docs/
 │   └── avance1/
-│       ├── TelecomTrack_Avance1.docx
-│       └── erd_telecomtrack.png
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/telecomtrack/
-│       │       ├── model/
-│       │       ├── dao/
-│       │       ├── service/
-│       │       └── controller/
-│       └── webapp/
-│           ├── WEB-INF/
-│           └── views/
 ├── .gitignore
+├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 └── README.md
 ```
 
----
+- `docs/`: documentación y evidencias de cada entrega.
+- `src/`: código fuente de la aplicación.
+- `CONTRIBUTING.md`: flujo de trabajo, ramas, commits, issues y pull requests.
+- `CODE_OF_CONDUCT.md`: normas de convivencia y responsabilidad académica.
 
-## Como ejecutar (desarrollo local)
-
-1. Clonar el repositorio
-
-```bash
-git clone https://github.com/fauricio9656/telecomtrack.git
-cd telecomtrack
-```
-
-2. Configurar base de datos en MySQL
-
-```sql
-CREATE DATABASE telecomtrack;
-```
-
-3. Ajustar credenciales en `src/main/resources/hibernate.cfg.xml`
-
-4. Abrir en NetBeans, compilar y desplegar en Tomcat o GlassFish
+La estructura se actualizará conforme se incorpore la base oficial del proyecto Spring Boot.
 
 ---
 
-## Avances del proyecto
+## 🤝 Contribución
 
-| Avance | Descripcion | Fecha entrega | Estado |
-|--------|-------------|---------------|--------|
-| Avance 1 | Planteamiento, historias de usuario, modelo de datos, prototipo | 13-14 jun 2026 | En progreso |
-| Practica 1 | CRUD con Hibernate/JPA | 20-21 jun 2026 | Pendiente |
-| Caso Practico 1 | Funcionalidad completa (15%) | 27-28 jun 2026 | Pendiente |
+El desarrollo directo corresponde a los integrantes del equipo y debe mantenerse dentro del alcance definido por el curso.
 
----
+Antes de realizar cambios, es obligatorio leer:
 
-## Contribuir
+- [Guía de contribución](CONTRIBUTING.md)
+- [Código de conducta](CODE_OF_CONDUCT.md)
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md) para el acuerdo de trabajo y convenciones del equipo.
-
----
-
-*Proyecto academico — SC-403 Aplicaciones Web y Patrones — Universidad Fidelitas — 2026*
+El incumplimiento de las normas académicas, técnicas o de colaboración puede poner en riesgo la entrega y será comunicado al docente cuando corresponda.
