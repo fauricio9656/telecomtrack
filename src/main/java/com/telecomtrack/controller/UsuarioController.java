@@ -66,12 +66,16 @@ public class UsuarioController {
 
     @GetMapping("/modificar/{idUsuario}")
     public String modificar(
-            Usuario usuario,
+            @PathVariable Integer idUsuario,
             Model model) {
 
-        usuario = usuarioService.getUsuario(usuario);
+        var usuario = usuarioService.getUsuario(idUsuario);
 
-        model.addAttribute("usuario", usuario);
+        if (usuario.isEmpty()) {
+            return "redirect:/usuario/listado";
+        }
+
+        model.addAttribute("usuario", usuario.get());
         agregarRoles(model);
 
         return "usuario/modifica";

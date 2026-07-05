@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -26,9 +27,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario getUsuario(Usuario usuario) {
-        return usuarioRepository.findById(usuario.getIdUsuario())
-                .orElse(null);
+    public Optional getUsuario(Integer idUsuario) {
+        return usuarioRepository.findById(idUsuario);
     }
 
     @Transactional

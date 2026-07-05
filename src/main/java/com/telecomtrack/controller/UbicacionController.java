@@ -55,12 +55,13 @@ public class UbicacionController {
             @PathVariable Integer idUbicacion,
             Model model) {
 
-        var ubicacion = new Ubicacion();
-        ubicacion.setIdUbicacion(idUbicacion);
+        var ubicacion = ubicacionService.getUbicacion(idUbicacion);
 
-        ubicacion = ubicacionService.getUbicacion(ubicacion);
+        if (ubicacion.isEmpty()) {
+            return "redirect:/ubicacion/listado";
+        }
 
-        model.addAttribute("ubicacion", ubicacion);
+        model.addAttribute("ubicacion", ubicacion.get());
 
         return "ubicacion/modifica";
     }
@@ -70,12 +71,13 @@ public class UbicacionController {
             @PathVariable Integer idUbicacion,
             Model model) {
 
-        var ubicacion = new Ubicacion();
-        ubicacion.setIdUbicacion(idUbicacion);
+        var ubicacion = ubicacionService.getUbicacion(idUbicacion);
 
-        ubicacion = ubicacionService.getUbicacion(ubicacion);
+        if (ubicacion.isEmpty()) {
+            return "redirect:/ubicacion/listado";
+        }
 
-        model.addAttribute("ubicacion", ubicacion);
+        model.addAttribute("ubicacion", ubicacion.get());
 
         return "ubicacion/consulta";
     }

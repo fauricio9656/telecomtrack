@@ -24,6 +24,73 @@
 <div th:fragment="scripts">
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/rutinas.js}"></script>
+</div>
+
+<div th:fragment="confirmarDesactivarUsuario">
+
+    <div class="modal fade"
+         id="modalDesactivarUsuario"
+         tabindex="-1"
+         aria-labelledby="modalDesactivarUsuarioLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title"
+                        id="modalDesactivarUsuarioLabel">
+                        Confirmar desactivación
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    ¿Desea desactivar al usuario
+                    <strong id="modalDescripcion"></strong>?
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <form th:action="@{/usuario/desactivar}"
+                          method="post">
+
+                        <input type="hidden"
+                               id="modalId"
+                               name="idUsuario">
+
+                        <button type="submit"
+                                class="btn btn-danger">
+                            Desactivar
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 </html>

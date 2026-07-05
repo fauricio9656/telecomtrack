@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UbicacionService {
@@ -22,10 +23,8 @@ public class UbicacionService {
     }
 
     @Transactional(readOnly = true)
-    public Ubicacion getUbicacion(Ubicacion ubicacion) {
-        return ubicacionRepository
-                .findById(ubicacion.getIdUbicacion())
-                .orElse(null);
+    public Optional<Ubicacion> getUbicacion(Integer idUbicacion) {
+        return ubicacionRepository.findById(idUbicacion);
     }
 
     @Transactional
