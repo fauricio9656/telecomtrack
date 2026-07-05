@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Ubicaciones</h1>
+
+        <a th:href="@{/ubicacion/nuevo}"
+           class="btn btn-primary">
+            Agregar ubicación
+        </a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Responsable</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="ubicacion : ${ubicaciones}">
+            <td th:text="${ubicacion.nombre}"></td>
+            <td th:text="${ubicacion.descripcion}"></td>
+            <td th:text="${ubicacion.responsable}"></td>
+
+            <td>
+                <a th:href="@{/ubicacion/consultar/} + ${ubicacion.idUbicacion}"
+                   class="btn btn-info btn-sm">
+                    Consultar
+                </a>
+
+                <a th:href="@{/ubicacion/modificar/} + ${ubicacion.idUbicacion}"
+                   class="btn btn-warning btn-sm">
+                    Modificar
+                </a>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(ubicaciones)}">
+            <td colspan="4"
+                class="text-center">
+                No hay ubicaciones registradas.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>
