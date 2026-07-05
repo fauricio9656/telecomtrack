@@ -7,7 +7,8 @@
 
     <div class="mb-3">
         <a th:href="@{/materiales}" class="btn btn-sm btn-outline-secondary">
-            <i class="fa-solid fa-arrow-left me-1"></i>Volver a materiales
+            <i class="fa-solid fa-arrow-left me-1"></i>
+            <span th:text="#{mat.entrada.volver}">Volver a materiales</span>
         </a>
     </div>
 
@@ -16,24 +17,28 @@
         <div class="col-lg-5">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-success text-white py-3">
-                    <h5 class="mb-0"><i class="fa-solid fa-arrow-down me-2"></i>Registrar entrada de stock</h5>
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-arrow-down me-2"></i>
+                        <span th:text="#{mat.entrada.titulo}">Registrar entrada de stock</span>
+                    </h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="p-3 bg-light rounded mb-4 border-start border-4 border-primary">
                         <div class="row g-1 small">
-                            <div class="col-5 text-muted">Material:</div>
+                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.material}">Material:</div>
                             <div class="col-7 fw-semibold" th:text="${material.nombre}"></div>
-                            <div class="col-5 text-muted">Codigo:</div>
+                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.codigo}">Codigo:</div>
                             <div class="col-7"><code th:text="${material.codigoUnico}"></code></div>
-                            <div class="col-5 text-muted">Unidad:</div>
+                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.unidad}">Unidad:</div>
                             <div class="col-7" th:text="${material.unidadMedida}"></div>
-                            <div class="col-5 text-muted">Stock actual:</div>
+                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.stockActual}">Stock actual:</div>
                             <div class="col-7">
                                 <span th:text="${material.stockActual}"
-                                      th:class="${material.stockBajo} ? 'fw-bold text-danger' : 'fw-bold text-success'"></span>
+                                    th:class="${material.stockBajo} ? 'fw-bold text-danger' : 'fw-bold text-success'"></span>
                                 <span th:if="${material.stockBajo}"
-                                      class="badge bg-warning text-dark ms-1 small">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> Stock bajo
+                                    class="badge bg-warning text-dark ms-1 small">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    <span th:text="#{mat.entrada.stockBajo}">Stock bajo</span>
                                 </span>
                             </div>
                         </div>
@@ -51,19 +56,21 @@
                     <form th:action="@{/materiales/{id}/entrada(id=${material.idMaterial})}" method="post">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                Cantidad a ingresar <span class="text-danger">*</span>
+                                <span th:text="#{mat.entrada.cantidad}">Cantidad a ingresar</span>
+                                <span class="text-danger">*</span>
                             </label>
                             <input type="number" name="cantidad" class="form-control form-control-lg"
-                                   min="1" placeholder="Ej: 50" required />
+                                min="1" th:placeholder="#{mat.entrada.cantidad.placeholder}" required />
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Observacion</label>
+                            <label class="form-label fw-semibold" th:text="#{mat.entrada.observacion}">Observacion</label>
                             <textarea name="observacion" class="form-control" rows="3"
-                                      placeholder="Proveedor, numero de orden, descripcion..."></textarea>
+                                th:placeholder="#{mat.entrada.observacion.placeholder}"></textarea>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fa-solid fa-arrow-down me-2"></i>Registrar entrada
+                                <i class="fa-solid fa-arrow-down me-2"></i>
+                                <span th:text="#{mat.entrada.btn.registrar}">Registrar entrada</span>
                             </button>
                         </div>
                     </form>
@@ -76,22 +83,23 @@
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white border-bottom py-3">
                     <h6 class="mb-0 fw-bold">
-                        <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>Historial de entradas
+                        <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>
+                        <span th:text="#{mat.entrada.historial.titulo}">Historial de entradas</span>
                     </h6>
                 </div>
                 <div class="card-body p-0">
                     <div th:if="${#lists.isEmpty(movimientos)}" class="text-center py-5 text-muted">
                         <i class="fa-solid fa-inbox fa-2x mb-3 d-block"></i>
-                        Sin movimientos registrados aun.
+                        <span th:text="#{mat.entrada.historial.vacio}">Sin movimientos registrados aun.</span>
                     </div>
                     <div class="table-responsive" th:if="${not #lists.isEmpty(movimientos)}">
                         <table class="table table-sm table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th class="text-center">Tipo</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th>Observacion</th>
+                                    <th th:text="#{mat.entrada.historial.fecha}">Fecha</th>
+                                    <th class="text-center" th:text="#{mat.entrada.historial.tipo}">Tipo</th>
+                                    <th class="text-center" th:text="#{mat.entrada.historial.cantidad}">Cantidad</th>
+                                    <th th:text="#{mat.entrada.historial.observacion}">Observacion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,7 +110,7 @@
                                     </td>
                                     <td class="text-center fw-bold" th:text="${mov.cantidad}"></td>
                                     <td class="small text-muted"
-                                        th:text="${mov.observacion != null ? mov.observacion : '—'}"></td>
+                                        th:text="${mov.observacion != null ? mov.observacion : '–'}"></td>
                                 </tr>
                             </tbody>
                         </table>
