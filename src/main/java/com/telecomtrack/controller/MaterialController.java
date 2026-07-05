@@ -1,12 +1,14 @@
 package com.telecomtrack.controller;
 
 import com.telecomtrack.domain.Material;
-import com.telecomtrack.repository.CategoriaRepository;
-import com.telecomtrack.repository.ProveedorRepository;
+import com.telecomtrack.service.CategoriaService;
 import com.telecomtrack.service.MaterialService;
 import com.telecomtrack.service.MovimientoService;
+import com.telecomtrack.service.ProveedorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +22,13 @@ public class MaterialController {
 
     private final MaterialService materialService;
     private final MovimientoService movimientoService;
-    private final CategoriaRepository categoriaRepository;
-    private final ProveedorRepository proveedorRepository;
+    private final CategoriaService categoriaService;
+    private final ProveedorService proveedorService;
+    private final MessageSource messageSource;
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
     @GetMapping
     public String lista(Model model) {
@@ -33,8 +40,8 @@ public class MaterialController {
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("material", new Material());
-        model.addAttribute("categorias", categoriaRepository.findAll());
-        model.addAttribute("proveedores", proveedorRepository.findAll());
+        model.addAttribute("categorias", categoriaService.listarTodas());
+        model.addAttribute("proveedores", proveedorService.listarTodos());
         return "materiales/formulario";
     }
 
@@ -42,11 +49,11 @@ public class MaterialController {
     public String editar(@PathVariable Long id, Model model, RedirectAttributes flash) {
         return materialService.buscarPorId(id).map(m -> {
             model.addAttribute("material", m);
-            model.addAttribute("categorias", categoriaRepository.findAll());
-            model.addAttribute("proveedores", proveedorRepository.findAll());
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            model.addAttribute("proveedores", proveedorService.listarTodos());
             return "materiales/formulario";
         }).orElseGet(() -> {
-            flash.addFlashAttribute("error", "Material no encontrado");
+            flash.addFlashAttribute("error", msg("mat.msg.noEncontrado"));
             return "redirect:/materiales";
         });
     }
@@ -59,15 +66,15 @@ public class MaterialController {
                           Model model, RedirectAttributes flash) {
 
         if (categoriaId != null) {
-            categoriaRepository.findById(categoriaId).ifPresent(material::setCategoria);
+            categoriaService.buscarPorId(categoriaId).ifPresent(material::setCategoria);
         }
         if (proveedorId != null) {
-            proveedorRepository.findById(proveedorId).ifPresent(material::setProveedor);
+            proveedorService.buscarPorId(proveedorId).ifPresent(material::setProveedor);
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("categorias", categoriaRepository.findAll());
-            model.addAttribute("proveedores", proveedorRepository.findAll());
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            model.addAttribute("proveedores", proveedorService.listarTodos());
             return "materiales/formulario";
         }
 
@@ -77,14 +84,14 @@ public class MaterialController {
                 : materialService.existeCodigoUnicoExcluyendo(material.getCodigoUnico(), material.getIdMaterial());
 
         if (duplicado) {
-            result.rejectValue("codigoUnico", "error.material", "Este codigo ya esta en uso");
-            model.addAttribute("categorias", categoriaRepository.findAll());
-            model.addAttribute("proveedores", proveedorRepository.findAll());
+            result.rejectValue("codigoUnico", "error.material", msg("mat.msg.codigoDuplicado"));
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            model.addAttribute("proveedores", proveedorService.listarTodos());
             return "materiales/formulario";
         }
 
         materialService.guardar(material);
-        flash.addFlashAttribute("exito", "Material " + (esNuevo ? "creado" : "actualizado") + " correctamente");
+        flash.addFlashAttribute("exitoo", msg(esNuevo ? "mat.msg.creado" : "mat.msg.actualizado"));
         return "redirect:/materiales";
     }
 
@@ -92,9 +99,9 @@ public class MaterialController {
     public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
         try {
             materialService.eliminar(id);
-            flash.addFlashAttribute("exito", "Material eliminado correctamente");
+            flash.addFlashAttribute("exitoo", msg("mat.msg.eliminado"));
         } catch (Exception e) {
-            flash.addFlashAttribute("error", "No se pudo eliminar el material");
+            flash.addFlashAttribute("error", msg("mat.msg.errorEliminar"));
         }
         return "redirect:/materiales";
     }
@@ -106,22 +113,22 @@ public class MaterialController {
             model.addAttribute("movimientos", movimientoService.listarPorMaterial(id));
             return "materiales/entrada-stock";
         }).orElseGet(() -> {
-            flash.addFlashAttribute("error", "Material no encontrado");
+            flash.addFlashAttribute("error", msg("mat.msg.noEncontrado"));
             return "redirect:/materiales";
         });
     }
 
     @PostMapping("/{id}/entrada")
     public String registrarEntrada(@PathVariable Long id,
-                                   @RequestParam Integer cantidad,
-                                   @RequestParam(required = false) String observacion,
-                                   RedirectAttributes flash) {
+                                    @RequestParam Integer cantidad,
+                                    @RequestParam(required = false) String observacion,
+                                    RedirectAttributes flash) {
         if (cantidad == null || cantidad < 1) {
-            flash.addFlashAttribute("error", "La cantidad debe ser mayor a 0");
+            flash.addFlashAttribute("error", msg("mat.msg.cantidadInvalida"));
             return "redirect:/materiales/" + id + "/entrada";
         }
         movimientoService.registrarEntrada(id, cantidad, observacion);
-        flash.addFlashAttribute("exito", "Entrada de " + cantidad + " unidades registrada correctamente");
+        flash.addFlashAttribute("exitoo", msg("mat.msg.entradaRegistrada", cantidad));
         return "redirect:/materiales";
     }
 }

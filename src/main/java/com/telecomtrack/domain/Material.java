@@ -17,24 +17,24 @@ public class Material {
     @Column(name = "id_material")
     private Long idMaterial;
 
-    @NotBlank(message = "El codigo es requerido")
+    @NotBlank(message = "{validacion.material.codigo.requerido}")
     @Column(name = "codigo_unico", unique = true, nullable = false, length = 50)
     private String codigoUnico;
 
-    @NotBlank(message = "El nombre es requerido")
+    @NotBlank(message = "{validacion.material.nombre.requerido}")
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @NotBlank(message = "La unidad de medida es requerida")
+    @NotBlank(message = "{validacion.material.unidad.requerida}")
     @Column(name = "unidad_medida", nullable = false, length = 30)
     private String unidadMedida;
 
-    @Min(value = 0, message = "El stock no puede ser negativo")
+    @Min(value = 0, message = "{validacion.material.stock.negativo}")
     @Column(name = "stock_actual", nullable = false)
     @Builder.Default
     private Integer stockActual = 0;
 
-    @Min(value = 0, message = "El stock minimo no puede ser negativo")
+    @Min(value = 0, message = "{validacion.material.stockMinimo.negativo}")
     @Column(name = "stock_minimo", nullable = false)
     @Builder.Default
     private Integer stockMinimo = 0;
