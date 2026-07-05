@@ -20,47 +20,69 @@
                th:field="*{idUsuario}">
 
         <div class="mb-3">
-            <label for="nombre" class="form-label">
+            <label for="nombre"
+                   class="form-label">
                 Nombre
             </label>
 
             <input type="text"
                    id="nombre"
                    class="form-control"
-                   th:field="*{nombre}">
+                   th:field="*{nombre}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('nombre')}"
+                 th:errors="*{nombre}">
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="apellido" class="form-label">
+            <label for="apellido"
+                   class="form-label">
                 Apellido
             </label>
 
             <input type="text"
                    id="apellido"
                    class="form-control"
-                   th:field="*{apellido}">
+                   th:field="*{apellido}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('apellido')}"
+                 th:errors="*{apellido}">
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="correo" class="form-label">
+            <label for="correo"
+                   class="form-label">
                 Correo
             </label>
 
             <input type="email"
                    id="correo"
                    class="form-control"
-                   th:field="*{correo}">
+                   th:field="*{correo}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('correo')}"
+                 th:errors="*{correo}">
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="rol" class="form-label">
+            <label for="rol"
+                   class="form-label">
                 Rol
             </label>
 
             <select id="rol"
                     class="form-select"
                     th:field="*{rol}"
-                    required>
+                    th:errorclass="is-invalid">
 
                 <option value="">
                     Seleccione un rol
@@ -72,6 +94,11 @@
                 </option>
 
             </select>
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('rol')}"
+                 th:errors="*{rol}">
+            </div>
         </div>
 
         <input type="hidden"

@@ -43,25 +43,22 @@
                     Modificar
                 </a>
 
-                <form th:if="${usuario.activo}"
-                      th:action="@{/usuario/desactivar}"
-                      method="post"
-                      class="d-inline">
+                <button th:if="${usuario.activo}"
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalDesactivarUsuario"
+                        th:attr="data-bs-id=${usuario.idUsuario},
+                 data-bs-descripcion=${usuario.nombre + ' ' + usuario.apellido}">
+                    Desactivar
+                </button>
 
-                    <input type="hidden"
-                           name="idUsuario"
-                           th:value="${usuario.idUsuario}">
-
-                    <button type="submit"
-                            class="btn btn-danger btn-sm"
-                            onclick="return confirm('¿Desea desactivar este usuario?')">
-                        Desactivar
-                    </button>
-                </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <div th:replace="~{general/fragmentos :: confirmarDesactivarUsuario}"></div>
 
 </main>
 
