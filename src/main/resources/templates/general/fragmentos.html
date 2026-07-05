@@ -4,7 +4,8 @@
 
 <head th:fragment="head">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title th:text="#{plantilla.titulo}"></title>
 
@@ -15,9 +16,58 @@
           rel="stylesheet">
 </head>
 
-<header th:fragment="header">
-</header>
+<header th:fragment="header"
+        class="bg-dark text-white p-3">
 
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a th:href="@{/}"
+           class="text-white text-decoration-none">
+            TelecomTrack
+        </a>
+
+        <div class="dropdown">
+            <button class="btn btn-outline-light dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Idioma
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item"
+                       href="?lang=es">
+                        Español
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item"
+                       href="?lang=en">
+                        English
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item"
+                       href="?lang=ja">
+                        日本語
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item"
+                       href="?lang=zh">
+                        中文
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</header>
 <footer th:fragment="footer">
 </footer>
 
@@ -42,21 +92,23 @@
                 <div class="modal-header">
 
                     <h5 class="modal-title"
-                        id="modalDesactivarUsuarioLabel">
-                        Confirmar desactivación
+                        id="modalDesactivarUsuarioLabel"
+                        th:text="#{usuario.confirmacion.desactivar.titulo}">
                     </h5>
 
                     <button type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
-                            aria-label="Cerrar">
+                            th:attr="aria-label=#{accion.cerrar}">
                     </button>
 
                 </div>
 
                 <div class="modal-body">
 
-                    ¿Desea desactivar al usuario
+                    <span th:text="#{usuario.confirmacion.desactivar.mensaje}">
+                    </span>
+
                     <strong id="modalDescripcion"></strong>?
 
                 </div>
@@ -65,8 +117,8 @@
 
                     <button type="button"
                             class="btn btn-secondary"
-                            data-bs-dismiss="modal">
-                        Cancelar
+                            data-bs-dismiss="modal"
+                            th:text="#{accion.cancelar}">
                     </button>
 
                     <form th:action="@{/usuario/desactivar}"
@@ -77,8 +129,8 @@
                                name="idUsuario">
 
                         <button type="submit"
-                                class="btn btn-danger">
-                            Desactivar
+                                class="btn btn-danger"
+                                th:text="#{accion.desactivar}">
                         </button>
 
                     </form>

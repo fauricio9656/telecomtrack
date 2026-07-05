@@ -10,9 +10,9 @@
 
 <main class="container py-5">
 
-    <h1 th:text="${ubicacion.idUbicacion == null
-            ? 'Agregar ubicación'
-            : 'Modificar ubicación'}">
+    <h1 th:text="${ubicacion.idUbicacion == null}
+            ? #{ubicacion.titulo.agregar}
+            : #{ubicacion.titulo.modificar}">
     </h1>
 
     <form th:action="@{/ubicacion/guardar}"
@@ -23,9 +23,10 @@
                th:field="*{idUbicacion}">
 
         <div class="mb-3">
+
             <label for="nombre"
-                   class="form-label">
-                Nombre
+                   class="form-label"
+                   th:text="#{campo.nombre}">
             </label>
 
             <input type="text"
@@ -38,12 +39,14 @@
                  th:if="${#fields.hasErrors('nombre')}"
                  th:errors="*{nombre}">
             </div>
+
         </div>
 
         <div class="mb-3">
+
             <label for="descripcion"
-                   class="form-label">
-                Descripción
+                   class="form-label"
+                   th:text="#{campo.descripcion}">
             </label>
 
             <textarea id="descripcion"
@@ -57,12 +60,14 @@
                  th:if="${#fields.hasErrors('descripcion')}"
                  th:errors="*{descripcion}">
             </div>
+
         </div>
 
         <div class="mb-3">
+
             <label for="responsable"
-                   class="form-label">
-                Responsable
+                   class="form-label"
+                   th:text="#{campo.responsable}">
             </label>
 
             <input type="text"
@@ -75,16 +80,17 @@
                  th:if="${#fields.hasErrors('responsable')}"
                  th:errors="*{responsable}">
             </div>
+
         </div>
 
         <button type="submit"
-                class="btn btn-primary">
-            Guardar
+                class="btn btn-primary"
+                th:text="#{accion.guardar}">
         </button>
 
         <a th:href="@{/ubicacion/listado}"
-           class="btn btn-secondary">
-            Regresar
+           class="btn btn-secondary"
+           th:text="#{accion.regresar}">
         </a>
 
     </form>

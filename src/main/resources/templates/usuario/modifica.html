@@ -10,7 +10,7 @@
 
 <main class="container py-5">
 
-    <h1>Usuario</h1>
+    <h1 th:text="#{usuario.titulo.formulario}"></h1>
 
     <form th:action="@{/usuario/guardar}"
           method="post"
@@ -20,9 +20,10 @@
                th:field="*{idUsuario}">
 
         <div class="mb-3">
+
             <label for="nombre"
-                   class="form-label">
-                Nombre
+                   class="form-label"
+                   th:text="#{campo.nombre}">
             </label>
 
             <input type="text"
@@ -35,12 +36,14 @@
                  th:if="${#fields.hasErrors('nombre')}"
                  th:errors="*{nombre}">
             </div>
+
         </div>
 
         <div class="mb-3">
+
             <label for="apellido"
-                   class="form-label">
-                Apellido
+                   class="form-label"
+                   th:text="#{campo.apellido}">
             </label>
 
             <input type="text"
@@ -53,12 +56,14 @@
                  th:if="${#fields.hasErrors('apellido')}"
                  th:errors="*{apellido}">
             </div>
+
         </div>
 
         <div class="mb-3">
+
             <label for="correo"
-                   class="form-label">
-                Correo
+                   class="form-label"
+                   th:text="#{campo.correo}">
             </label>
 
             <input type="email"
@@ -71,12 +76,14 @@
                  th:if="${#fields.hasErrors('correo')}"
                  th:errors="*{correo}">
             </div>
+
         </div>
 
         <div class="mb-3">
+
             <label for="rol"
-                   class="form-label">
-                Rol
+                   class="form-label"
+                   th:text="#{campo.rol}">
             </label>
 
             <select id="rol"
@@ -84,13 +91,24 @@
                     th:field="*{rol}"
                     th:errorclass="is-invalid">
 
-                <option value="">
-                    Seleccione un rol
+                <option value=""
+                        th:text="#{rol.seleccionar}">
                 </option>
 
-                <option th:each="rolDisponible : ${roles}"
-                        th:value="${rolDisponible}"
-                        th:text="${rolDisponible}">
+                <option value="Administrador"
+                        th:text="#{rol.administrador}">
+                </option>
+
+                <option value="Bodeguero"
+                        th:text="#{rol.bodeguero}">
+                </option>
+
+                <option value="Técnico"
+                        th:text="#{rol.tecnico}">
+                </option>
+
+                <option value="Supervisor"
+                        th:text="#{rol.supervisor}">
                 </option>
 
             </select>
@@ -99,19 +117,20 @@
                  th:if="${#fields.hasErrors('rol')}"
                  th:errors="*{rol}">
             </div>
+
         </div>
 
         <input type="hidden"
                th:field="*{activo}">
 
         <button type="submit"
-                class="btn btn-primary">
-            Guardar
+                class="btn btn-primary"
+                th:text="#{accion.guardar}">
         </button>
 
         <a th:href="@{/usuario/listado}"
-           class="btn btn-secondary">
-            Regresar
+           class="btn btn-secondary"
+           th:text="#{accion.regresar}">
         </a>
 
     </form>
