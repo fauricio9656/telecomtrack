@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Usuarios</h1>
+
+        <a th:href="@{/usuario/nuevo}"
+           class="btn btn-primary">
+            Agregar usuario
+        </a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.nombre + ' ' + usuario.apellido}"></td>
+            <td th:text="${usuario.correo}"></td>
+            <td th:text="${usuario.rol}"></td>
+            <td th:text="${usuario.activo ? 'Sí' : 'No'}"></td>
+
+            <td>
+                <a th:href="@{/usuario/modificar/} + ${usuario.idUsuario}"
+                   class="btn btn-warning btn-sm">
+                    Modificar
+                </a>
+
+                <form th:if="${usuario.activo}"
+                      th:action="@{/usuario/desactivar}"
+                      method="post"
+                      class="d-inline">
+
+                    <input type="hidden"
+                           name="idUsuario"
+                           th:value="${usuario.idUsuario}">
+
+                    <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('¿Desea desactivar este usuario?')">
+                        Desactivar
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>
