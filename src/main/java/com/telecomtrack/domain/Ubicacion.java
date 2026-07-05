@@ -19,17 +19,17 @@ public class Ubicacion implements Serializable {
     @Column(name = "id_ubicacion")
     private Integer idUbicacion;
 
-    @NotBlank(message = "El nombre no puede estar vacío.")
-    @Size(max = 100, message = "El nombre no puede tener más de 100 caracteres.")
+    @NotBlank(message = "{validacion.nombre.requerido}")
+    @Size(max = 100, message = "{validacion.ubicacion.nombre.longitud}")
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Size(max = 255, message = "La descripción no puede tener más de 255 caracteres.")
+    @Size(max = 255, message = "{validacion.ubicacion.descripcion.longitud}")
     @Column(length = 255)
     private String descripcion;
 
-    @NotBlank(message = "El responsable no puede estar vacío.")
-    @Size(max = 100, message = "El responsable no puede tener más de 100 caracteres.")
+    @NotBlank(message = "{validacion.ubicacion.responsable.requerido}")
+    @Size(max = 100, message = "{validacion.ubicacion.responsable.longitud}")
     @Column(nullable = false, length = 100)
     private String responsable;
 }

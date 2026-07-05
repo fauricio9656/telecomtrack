@@ -11,50 +11,67 @@
 <main class="container py-5">
 
     <div class="d-flex justify-content-between mb-3">
-        <h1>Ubicaciones</h1>
+
+        <h1 th:text="#{ubicacion.titulo.listado}">
+        </h1>
 
         <a th:href="@{/ubicacion/nuevo}"
-           class="btn btn-primary">
-            Agregar ubicación
+           class="btn btn-primary"
+           th:text="#{ubicacion.accion.agregar}">
         </a>
+
     </div>
 
     <table class="table table-striped">
+
         <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Responsable</th>
-            <th>Acciones</th>
+            <th th:text="#{campo.nombre}"></th>
+            <th th:text="#{campo.descripcion}"></th>
+            <th th:text="#{campo.responsable}"></th>
+            <th th:text="#{campo.acciones}"></th>
         </tr>
         </thead>
 
         <tbody>
+
         <tr th:each="ubicacion : ${ubicaciones}">
+
             <td th:text="${ubicacion.nombre}"></td>
+
             <td th:text="${ubicacion.descripcion}"></td>
+
             <td th:text="${ubicacion.responsable}"></td>
 
             <td>
-                <a th:href="@{/ubicacion/consultar/} + ${ubicacion.idUbicacion}"
-                   class="btn btn-info btn-sm">
-                    Consultar
+
+                <a th:href="@{/ubicacion/consultar/{idUbicacion}
+                   (idUbicacion=${ubicacion.idUbicacion})}"
+                   class="btn btn-info btn-sm"
+                   th:text="#{accion.consultar}">
                 </a>
 
-                <a th:href="@{/ubicacion/modificar/} + ${ubicacion.idUbicacion}"
-                   class="btn btn-warning btn-sm">
-                    Modificar
+                <a th:href="@{/ubicacion/modificar/{idUbicacion}
+                   (idUbicacion=${ubicacion.idUbicacion})}"
+                   class="btn btn-warning btn-sm"
+                   th:text="#{accion.modificar}">
                 </a>
+
             </td>
+
         </tr>
 
         <tr th:if="${#lists.isEmpty(ubicaciones)}">
+
             <td colspan="4"
-                class="text-center">
-                No hay ubicaciones registradas.
+                class="text-center"
+                th:text="#{ubicacion.mensaje.sin-registros}">
             </td>
+
         </tr>
+
         </tbody>
+
     </table>
 
 </main>

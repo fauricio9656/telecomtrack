@@ -21,10 +21,10 @@ public class UsuarioController {
 
     private void agregarRoles(Model model) {
         String[] roles = {
-                "Administrador",
-                "Bodeguero",
-                "Técnico",
-                "Supervisor"
+                "{rol.administrador}",
+                "{rol.bodeguero}",
+                "{rol.tecnico}",
+                "{rol.supervisor}"
         };
 
         model.addAttribute("roles", roles);

@@ -21,24 +21,24 @@ public class Usuario implements Serializable {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-    @NotBlank(message = "El nombre no puede estar vacío.")
-    @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres.")
+    @NotBlank(message = "{validacion.nombre.requerido}")
+    @Size(max = 50, message = "{validacion.usuario.nombre.longitud}")
     @Column(nullable = false, length = 50)
     private String nombre;
 
-    @NotBlank(message = "El apellido no puede estar vacío.")
-    @Size(max = 50, message = "El apellido no puede tener más de 50 caracteres.")
+    @NotBlank(message = "{validacion.usuario.apellido.requerido}")
+    @Size(max = 50, message = "{validacion.usuario.apellido.longitud}")
     @Column(nullable = false, length = 50)
     private String apellido;
 
-    @NotBlank(message = "El correo no puede estar vacío.")
-    @Email(message = "El correo debe tener un formato válido.")
-    @Size(max = 100, message = "El correo no puede tener más de 100 caracteres.")
+    @NotBlank(message = "{validacion.usuario.correo.requerido}")
+    @Email(message = "{validacion.usuario.correo.formato}")
+    @Size(max = 100, message = "{validacion.usuario.correo.longitud}")
     @Column(nullable = false, unique = true, length = 100)
     private String correo;
 
-    @NotBlank(message = "Debe seleccionar un rol.")
-    @Size(max = 20, message = "El rol no puede tener más de 20 caracteres.")
+    @NotBlank(message = "{validacion.usuario.rol.requerido}")
+    @Size(max = 20, message = "{validacion.usuario.rol.longitud}")
     @Column(nullable = false, length = 20)
     private String rol;
 
