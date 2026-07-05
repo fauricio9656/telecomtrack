@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{ubicacion.titulo.detalle}"></h1>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{campo.nombre}"></span>:
+                </strong>
+                <span th:text="${ubicacion.nombre}"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{campo.descripcion}"></span>:
+                </strong>
+                <span th:text="${ubicacion.descripcion}"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{campo.responsable}"></span>:
+                </strong>
+                <span th:text="${ubicacion.responsable}"></span>
+            </div>
+
+            <a th:href="@{/ubicacion/modificar/{idUbicacion}
+               (idUbicacion=${ubicacion.idUbicacion})}"
+               class="btn btn-warning"
+               th:text="#{accion.modificar}">
+            </a>
+
+            <a th:href="@{/ubicacion/listado}"
+               class="btn btn-secondary"
+               th:text="#{accion.regresar}">
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

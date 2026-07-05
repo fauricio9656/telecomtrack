@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{usuario.titulo.formulario}"></h1>
+
+    <form th:action="@{/usuario/guardar}"
+          method="post"
+          th:object="${usuario}">
+
+        <input type="hidden"
+               th:field="*{idUsuario}">
+
+        <div class="mb-3">
+
+            <label for="nombre"
+                   class="form-label"
+                   th:text="#{campo.nombre}">
+            </label>
+
+            <input type="text"
+                   id="nombre"
+                   class="form-control"
+                   th:field="*{nombre}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('nombre')}"
+                 th:errors="*{nombre}">
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label for="apellido"
+                   class="form-label"
+                   th:text="#{campo.apellido}">
+            </label>
+
+            <input type="text"
+                   id="apellido"
+                   class="form-control"
+                   th:field="*{apellido}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('apellido')}"
+                 th:errors="*{apellido}">
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label for="correo"
+                   class="form-label"
+                   th:text="#{campo.correo}">
+            </label>
+
+            <input type="email"
+                   id="correo"
+                   class="form-control"
+                   th:field="*{correo}"
+                   th:errorclass="is-invalid">
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('correo')}"
+                 th:errors="*{correo}">
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label for="rol"
+                   class="form-label"
+                   th:text="#{campo.rol}">
+            </label>
+
+            <select id="rol"
+                    class="form-select"
+                    th:field="*{rol}"
+                    th:errorclass="is-invalid">
+
+                <option value=""
+                        th:text="#{rol.seleccionar}">
+                </option>
+
+                <option value="Administrador"
+                        th:text="#{rol.administrador}">
+                </option>
+
+                <option value="Bodeguero"
+                        th:text="#{rol.bodeguero}">
+                </option>
+
+                <option value="Técnico"
+                        th:text="#{rol.tecnico}">
+                </option>
+
+                <option value="Supervisor"
+                        th:text="#{rol.supervisor}">
+                </option>
+
+            </select>
+
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('rol')}"
+                 th:errors="*{rol}">
+            </div>
+
+        </div>
+
+        <input type="hidden"
+               th:field="*{activo}">
+
+        <button type="submit"
+                class="btn btn-primary"
+                th:text="#{accion.guardar}">
+        </button>
+
+        <a th:href="@{/usuario/listado}"
+           class="btn btn-secondary"
+           th:text="#{accion.regresar}">
+        </a>
+
+    </form>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>
