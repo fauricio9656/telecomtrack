@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS movimiento (
     cantidad      INT          NOT NULL,
     fecha         DATETIME     NOT NULL,
     observacion   VARCHAR(255),
+    responsable   VARCHAR(100),
     id_material   BIGINT,
     CONSTRAINT fk_mov_material FOREIGN KEY (id_material) REFERENCES material(id_material)
 );
@@ -60,10 +61,10 @@ INSERT INTO material (codigo_unico, nombre, unidad_medida, stock_actual, stock_m
     ('MAT-CEL-001', 'Cintillo plástico 20cm','bolsa',  30,  10, 1, 3),
     ('EQ-SW-001',   'Switch 8p no manejable','unidad',  2,   1, 4, 3);
 
-INSERT INTO movimiento (tipo, cantidad, fecha, observacion, id_material) VALUES
-    ('ENTRADA', 500, NOW(), 'Compra inicial — Orden #2024-001', 1),
-    ('ENTRADA', 200, NOW(), 'Compra inicial — Orden #2024-001', 2),
-    ('ENTRADA',  10, NOW(), 'Dotación herramientas',            3),
-    ('ENTRADA',   3, NOW(), 'Dotación herramientas',            4),
-    ('ENTRADA',  30, NOW(), 'Stock inicial',                    5),
-    ('ENTRADA',   2, NOW(), 'Compra inicial',                   6);
+INSERT INTO movimiento (tipo, cantidad, fecha, observacion, responsable, id_material) VALUES
+    ('ENTRADA', 500, NOW(), 'Compra inicial — Orden #2024-001', 'Juan Mora',    1),
+    ('ENTRADA', 200, NOW(), 'Compra inicial — Orden #2024-001', 'Ana Solís',    2),
+    ('ENTRADA',  10, NOW(), 'Dotación herramientas',            'Pedro Rojas',  3),
+    ('ENTRADA',   3, NOW(), 'Dotación herramientas',            'Pedro Rojas',  4),
+    ('ENTRADA',  30, NOW(), 'Stock inicial',                    'Juan Mora',    5),
+    ('ENTRADA',   2, NOW(), 'Compra inicial',                   'Ana Solís',    6);

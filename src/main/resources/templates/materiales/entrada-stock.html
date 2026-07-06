@@ -62,6 +62,11 @@
                             <input type="number" name="cantidad" class="form-control form-control-lg"
                                 min="1" th:placeholder="#{mat.entrada.cantidad.placeholder}" required />
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" th:text="#{mat.entrada.responsable}">Responsable</label>
+                            <input type="text" name="responsable" class="form-control"
+                                th:placeholder="#{mat.entrada.responsable.placeholder}" maxlength="100" />
+                        </div>
                         <div class="mb-4">
                             <label class="form-label fw-semibold" th:text="#{mat.entrada.observacion}">Observacion</label>
                             <textarea name="observacion" class="form-control" rows="3"
@@ -99,6 +104,7 @@
                                     <th th:text="#{mat.entrada.historial.fecha}">Fecha</th>
                                     <th class="text-center" th:text="#{mat.entrada.historial.tipo}">Tipo</th>
                                     <th class="text-center" th:text="#{mat.entrada.historial.cantidad}">Cantidad</th>
+                                    <th th:text="#{mat.entrada.historial.responsable}">Responsable</th>
                                     <th th:text="#{mat.entrada.historial.observacion}">Observacion</th>
                                 </tr>
                             </thead>
@@ -109,6 +115,7 @@
                                         <span class="badge bg-success" th:text="${mov.tipo}"></span>
                                     </td>
                                     <td class="text-center fw-bold" th:text="${mov.cantidad}"></td>
+                                    <td class="small" th:text="${mov.responsable != null ? mov.responsable : '–'}"></td>
                                     <td class="small text-muted"
                                         th:text="${mov.observacion != null ? mov.observacion : '–'}"></td>
                                 </tr>

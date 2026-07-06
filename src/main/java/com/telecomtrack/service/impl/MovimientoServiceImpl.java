@@ -20,7 +20,7 @@ public class MovimientoServiceImpl implements MovimientoService {
     private final MaterialRepository materialRepository;
 
     @Override
-    public Movimiento registrarEntrada(Long idMaterial, Integer cantidad, String observacion) {
+    public Movimiento registrarEntrada(Long idMaterial, Integer cantidad, String observacion, String responsable) {
         Material material = materialRepository.findById(idMaterial)
                 .orElseThrow(() -> new IllegalArgumentException("Material no encontrado: " + idMaterial));
 
@@ -32,6 +32,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                 .cantidad(cantidad)
                 .fecha(LocalDateTime.now())
                 .observacion(observacion)
+                .responsable(responsable)
                 .material(material)
                 .build();
 

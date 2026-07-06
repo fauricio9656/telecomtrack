@@ -122,12 +122,13 @@ public class MaterialController {
     public String registrarEntrada(@PathVariable Long id,
                                     @RequestParam Integer cantidad,
                                     @RequestParam(required = false) String observacion,
+                                    @RequestParam(required = false) String responsable,
                                     RedirectAttributes flash) {
         if (cantidad == null || cantidad < 1) {
             flash.addFlashAttribute("error", msg("mat.msg.cantidadInvalida"));
             return "redirect:/materiales/" + id + "/entrada";
         }
-        movimientoService.registrarEntrada(id, cantidad, observacion);
+        movimientoService.registrarEntrada(id, cantidad, observacion, responsable);
         flash.addFlashAttribute("exitoo", msg("mat.msg.entradaRegistrada", cantidad));
         return "redirect:/materiales";
     }

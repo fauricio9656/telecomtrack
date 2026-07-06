@@ -29,6 +29,9 @@ public class Movimiento {
     @Column(name = "observacion", length = 255)
     private String observacion;
 
+    @Column(name = "responsable", length = 100)
+    private String responsable;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_material")
     private Material material;
