@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{herramienta.titulo.mantenimiento}"></h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <div class="mb-2">
+                <strong>
+                    <span th:text="#{herramienta.campo.codigo}"></span>:
+                </strong>
+                <span th:text="${herramienta.codigo}"></span>
+            </div>
+
+            <div>
+                <strong>
+                    <span th:text="#{herramienta.campo.nombre}"></span>:
+                </strong>
+                <span th:text="${herramienta.nombre}"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <form th:action="@{/herramienta/mantenimiento}"
+          method="post">
+
+        <input type="hidden"
+               name="idHerramienta"
+               th:value="${herramienta.idHerramienta}">
+
+        <div class="mb-3">
+
+            <label for="fechaRetornoEstimada"
+                   class="form-label"
+                   th:text="#{herramienta.campo.fechaRetorno}">
+            </label>
+
+            <input type="date"
+                   id="fechaRetornoEstimada"
+                   name="fechaRetornoEstimada"
+                   class="form-control"
+                   th:value="${herramienta.fechaRetornoEstimada}">
+
+            <div class="form-text"
+                 th:text="#{herramienta.mantenimiento.ayuda}">
+            </div>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary"
+                th:text="#{herramienta.accion.confirmarMantenimiento}">
+        </button>
+
+        <a th:href="@{/herramienta/listado}"
+           class="btn btn-secondary"
+           th:text="#{herramienta.accion.regresar}">
+        </a>
+
+    </form>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

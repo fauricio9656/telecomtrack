@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{herramienta.titulo.baja}"></h1>
+
+    <div class="alert alert-warning"
+         th:text="#{herramienta.baja.aviso}">
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <div class="mb-2">
+                <strong>
+                    <span th:text="#{herramienta.campo.codigo}"></span>:
+                </strong>
+                <span th:text="${herramienta.codigo}"></span>
+            </div>
+
+            <div>
+                <strong>
+                    <span th:text="#{herramienta.campo.nombre}"></span>:
+                </strong>
+                <span th:text="${herramienta.nombre}"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <form th:action="@{/herramienta/baja}"
+          method="post">
+
+        <input type="hidden"
+               name="idHerramienta"
+               th:value="${herramienta.idHerramienta}">
+
+        <div class="mb-3">
+
+            <label for="justificacion"
+                   class="form-label"
+                   th:text="#{herramienta.campo.justificacion}">
+            </label>
+
+            <textarea id="justificacion"
+                      name="justificacion"
+                      class="form-control"
+                      rows="4"
+                      th:classappend="${errorJustificacion} ? 'is-invalid'">
+            </textarea>
+
+            <div class="invalid-feedback"
+                 th:if="${errorJustificacion}"
+                 th:text="#{validacion.herramienta.justificacion.requerido}">
+            </div>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-danger"
+                th:text="#{herramienta.accion.confirmarBaja}">
+        </button>
+
+        <a th:href="@{/herramienta/listado}"
+           class="btn btn-secondary"
+           th:text="#{herramienta.accion.regresar}">
+        </a>
+
+    </form>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

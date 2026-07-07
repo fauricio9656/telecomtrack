@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{herramienta.titulo.detalle}"></h1>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{herramienta.campo.codigo}"></span>:
+                </strong>
+                <span th:text="${herramienta.codigo}"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{herramienta.campo.nombre}"></span>:
+                </strong>
+                <span th:text="${herramienta.nombre}"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{herramienta.campo.descripcion}"></span>:
+                </strong>
+                <span th:text="${herramienta.descripcion}"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>
+                    <span th:text="#{herramienta.campo.estado}"></span>:
+                </strong>
+                <span th:switch="${herramienta.estado}">
+                    <span th:case="'DISPONIBLE'"
+                          class="badge bg-success"
+                          th:text="#{herramienta.estado.disponible}">
+                    </span>
+                    <span th:case="'MANTENIMIENTO'"
+                          class="badge bg-warning text-dark"
+                          th:text="#{herramienta.estado.mantenimiento}">
+                    </span>
+                    <span th:case="'BAJA'"
+                          class="badge bg-danger"
+                          th:text="#{herramienta.estado.baja}">
+                    </span>
+                </span>
+            </div>
+
+            <div class="mb-3"
+                 th:if="${herramienta.estado == 'MANTENIMIENTO'
+                         and herramienta.fechaRetornoEstimada != null}">
+                <strong>
+                    <span th:text="#{herramienta.campo.fechaRetorno}"></span>:
+                </strong>
+                <span th:text="${#temporals.format(
+                        herramienta.fechaRetornoEstimada, 'dd/MM/yyyy')}">
+                </span>
+            </div>
+
+            <div class="mb-3"
+                 th:if="${herramienta.estado == 'BAJA'}">
+                <strong>
+                    <span th:text="#{herramienta.campo.fechaBaja}"></span>:
+                </strong>
+                <span th:text="${herramienta.fechaBaja != null
+                        ? #temporals.format(herramienta.fechaBaja, 'dd/MM/yyyy')
+                        : ''}">
+                </span>
+            </div>
+
+            <div class="mb-3"
+                 th:if="${herramienta.estado == 'BAJA'}">
+                <strong>
+                    <span th:text="#{herramienta.campo.justificacion}"></span>:
+                </strong>
+                <span th:text="${herramienta.justificacionBaja}"></span>
+            </div>
+
+            <a th:href="@{/herramienta/modificar/{idHerramienta}
+               (idHerramienta=${herramienta.idHerramienta})}"
+               class="btn btn-warning"
+               th:text="#{herramienta.accion.modificar}">
+            </a>
+
+            <a th:href="@{/herramienta/listado}"
+               class="btn btn-secondary"
+               th:text="#{herramienta.accion.regresar}">
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>
