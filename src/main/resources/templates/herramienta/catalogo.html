@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <h1 th:text="#{herramienta.titulo.catalogo}"></h1>
+
+    <p class="text-muted"
+       th:text="#{herramienta.catalogo.descripcion}">
+    </p>
+
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th th:text="#{herramienta.campo.codigo}"></th>
+            <th th:text="#{herramienta.campo.nombre}"></th>
+            <th th:text="#{herramienta.campo.descripcion}"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="herramienta : ${herramientas}">
+
+            <td th:text="${herramienta.codigo}"></td>
+
+            <td th:text="${herramienta.nombre}"></td>
+
+            <td th:text="${herramienta.descripcion}"></td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(herramientas)}">
+
+            <td colspan="3"
+                class="text-center"
+                th:text="#{herramienta.catalogo.vacio}">
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>

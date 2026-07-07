@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{general/fragmentos :: head}"></head>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"></header>
+
+<main class="container py-5">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h1 th:text="#{herramienta.titulo.listado}">
+        </h1>
+
+        <a th:href="@{/herramienta/nuevo}"
+           class="btn btn-primary"
+           th:text="#{herramienta.accion.agregar}">
+        </a>
+
+    </div>
+
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th th:text="#{herramienta.campo.codigo}"></th>
+            <th th:text="#{herramienta.campo.nombre}"></th>
+            <th th:text="#{herramienta.campo.estado}"></th>
+            <th th:text="#{herramienta.campo.acciones}"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="herramienta : ${herramientas}">
+
+            <td th:text="${herramienta.codigo}"></td>
+
+            <td th:text="${herramienta.nombre}"></td>
+
+            <td th:switch="${herramienta.estado}">
+
+                <span th:case="'DISPONIBLE'"
+                      class="badge bg-success"
+                      th:text="#{herramienta.estado.disponible}">
+                </span>
+
+                <span th:case="'MANTENIMIENTO'"
+                      class="badge bg-warning text-dark"
+                      th:text="#{herramienta.estado.mantenimiento}">
+                </span>
+
+                <span th:case="'BAJA'"
+                      class="badge bg-danger"
+                      th:text="#{herramienta.estado.baja}">
+                </span>
+
+            </td>
+
+            <td>
+
+                <a th:href="@{/herramienta/consultar/{idHerramienta}
+                   (idHerramienta=${herramienta.idHerramienta})}"
+                   class="btn btn-info btn-sm"
+                   th:text="#{herramienta.accion.consultar}">
+                </a>
+
+                <a th:href="@{/herramienta/modificar/{idHerramienta}
+                   (idHerramienta=${herramienta.idHerramienta})}"
+                   class="btn btn-warning btn-sm"
+                   th:text="#{herramienta.accion.modificar}">
+                </a>
+
+                <a th:if="${herramienta.estado == 'DISPONIBLE'}"
+                   th:href="@{/herramienta/mantenimiento/{idHerramienta}
+                   (idHerramienta=${herramienta.idHerramienta})}"
+                   class="btn btn-secondary btn-sm"
+                   th:text="#{herramienta.accion.mantenimiento}">
+                </a>
+
+                <form th:if="${herramienta.estado == 'MANTENIMIENTO'}"
+                      th:action="@{/herramienta/disponible/{idHerramienta}
+                      (idHerramienta=${herramienta.idHerramienta})}"
+                      method="post"
+                      class="d-inline">
+
+                    <button type="submit"
+                            class="btn btn-success btn-sm"
+                            th:text="#{herramienta.accion.disponible}">
+                    </button>
+
+                </form>
+
+                <a th:if="${herramienta.estado != 'BAJA'}"
+                   th:href="@{/herramienta/baja/{idHerramienta}
+                   (idHerramienta=${herramienta.idHerramienta})}"
+                   class="btn btn-danger btn-sm"
+                   th:text="#{herramienta.accion.baja}">
+                </a>
+
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(herramientas)}">
+
+            <td colspan="4"
+                class="text-center"
+                th:text="#{herramienta.mensaje.sin-registros}">
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</main>
+
+<footer th:replace="~{general/fragmentos :: footer}"></footer>
+
+<div th:replace="~{general/fragmentos :: scripts}"></div>
+
+</body>
+</html>
