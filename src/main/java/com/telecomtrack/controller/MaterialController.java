@@ -6,7 +6,6 @@ import com.telecomtrack.service.MaterialService;
 import com.telecomtrack.service.MovimientoService;
 import com.telecomtrack.service.ProveedorService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/materiales")
-@RequiredArgsConstructor
 public class MaterialController {
 
     private final MaterialService materialService;
@@ -25,6 +23,18 @@ public class MaterialController {
     private final CategoriaService categoriaService;
     private final ProveedorService proveedorService;
     private final MessageSource messageSource;
+
+    public MaterialController(MaterialService materialService,
+                               MovimientoService movimientoService,
+                               CategoriaService categoriaService,
+                               ProveedorService proveedorService,
+                               MessageSource messageSource) {
+        this.materialService = materialService;
+        this.movimientoService = movimientoService;
+        this.categoriaService = categoriaService;
+        this.proveedorService = proveedorService;
+        this.messageSource = messageSource;
+    }
 
     private String msg(String key, Object... args) {
         return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
@@ -92,17 +102,6 @@ public class MaterialController {
 
         materialService.guardar(material);
         flash.addFlashAttribute("exitoo", msg(esNuevo ? "mat.msg.creado" : "mat.msg.actualizado"));
-        return "redirect:/materiales";
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
-        try {
-            materialService.eliminar(id);
-            flash.addFlashAttribute("exitoo", msg("mat.msg.eliminado"));
-        } catch (Exception e) {
-            flash.addFlashAttribute("error", msg("mat.msg.errorEliminar"));
-        }
         return "redirect:/materiales";
     }
 
