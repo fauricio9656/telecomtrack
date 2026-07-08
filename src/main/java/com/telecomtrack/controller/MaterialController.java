@@ -6,7 +6,6 @@ import com.telecomtrack.service.MaterialService;
 import com.telecomtrack.service.MovimientoService;
 import com.telecomtrack.service.ProveedorService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,9 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/materiales")
-@RequiredArgsConstructor
 public class MaterialController {
 
     private final MaterialService materialService;
@@ -25,6 +25,18 @@ public class MaterialController {
     private final CategoriaService categoriaService;
     private final ProveedorService proveedorService;
     private final MessageSource messageSource;
+
+    public MaterialController(MaterialService materialService,
+                               MovimientoService movimientoService,
+                               CategoriaService categoriaService,
+                               ProveedorService proveedorService,
+                               MessageSource messageSource) {
+        this.materialService = materialService;
+        this.movimientoService = movimientoService;
+        this.categoriaService = categoriaService;
+        this.proveedorService = proveedorService;
+        this.messageSource = messageSource;
+    }
 
     private String msg(String key, Object... args) {
         return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
@@ -79,6 +91,7 @@ public class MaterialController {
         }
 
         boolean esNuevo = material.getIdMaterial() == null;
+
         boolean duplicado = esNuevo
                 ? materialService.existeCodigoUnico(material.getCodigoUnico())
                 : materialService.existeCodigoUnicoExcluyendo(material.getCodigoUnico(), material.getIdMaterial());
@@ -90,19 +103,15 @@ public class MaterialController {
             return "materiales/formulario";
         }
 
+        if (esNuevo) {
+            material.setStockActual(0);
+        } else {
+            materialService.buscarPorId(material.getIdMaterial())
+                    .ifPresent(existente -> material.setStockActual(existente.getStockActual()));
+        }
+
         materialService.guardar(material);
         flash.addFlashAttribute("exitoo", msg(esNuevo ? "mat.msg.creado" : "mat.msg.actualizado"));
-        return "redirect:/materiales";
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, RedirectAttributes flash) {
-        try {
-            materialService.eliminar(id);
-            flash.addFlashAttribute("exitoo", msg("mat.msg.eliminado"));
-        } catch (Exception e) {
-            flash.addFlashAttribute("error", msg("mat.msg.errorEliminar"));
-        }
         return "redirect:/materiales";
     }
 
@@ -111,6 +120,7 @@ public class MaterialController {
         return materialService.buscarPorId(id).map(m -> {
             model.addAttribute("material", m);
             model.addAttribute("movimientos", movimientoService.listarPorMaterial(id));
+            model.addAttribute("proveedores", proveedorService.listarTodos());
             return "materiales/entrada-stock";
         }).orElseGet(() -> {
             flash.addFlashAttribute("error", msg("mat.msg.noEncontrado"));
@@ -120,15 +130,44 @@ public class MaterialController {
 
     @PostMapping("/{id}/entrada")
     public String registrarEntrada(@PathVariable Long id,
-                                    @RequestParam Integer cantidad,
+                                    @RequestParam(required = false) Integer cantidad,
+                                    @RequestParam(required = false) Long proveedorId,
                                     @RequestParam(required = false) String observacion,
                                     @RequestParam(required = false) String responsable,
-                                    RedirectAttributes flash) {
-        if (cantidad == null || cantidad < 1) {
-            flash.addFlashAttribute("error", msg("mat.msg.cantidadInvalida"));
-            return "redirect:/materiales/" + id + "/entrada";
+                                    Model model, RedirectAttributes flash) {
+
+        Optional<Material> matOpt = materialService.buscarPorId(id);
+        if (matOpt.isEmpty()) {
+            flash.addFlashAttribute("error", msg("mat.msg.noEncontrado"));
+            return "redirect:/materiales";
         }
-        movimientoService.registrarEntrada(id, cantidad, observacion, responsable);
+
+        boolean hasErrors = false;
+        if (cantidad == null || cantidad < 1) {
+            model.addAttribute("errorCantidad", msg("mat.msg.cantidadInvalida"));
+            hasErrors = true;
+        }
+        if (responsable == null || responsable.isBlank()) {
+            model.addAttribute("errorResponsable", msg("validacion.movimiento.responsable.requerido"));
+            hasErrors = true;
+        }
+        if (proveedorId == null) {
+            model.addAttribute("errorProveedor", msg("validacion.movimiento.proveedor.requerido"));
+            hasErrors = true;
+        }
+
+        if (hasErrors) {
+            model.addAttribute("material", matOpt.get());
+            model.addAttribute("movimientos", movimientoService.listarPorMaterial(id));
+            model.addAttribute("proveedores", proveedorService.listarTodos());
+            model.addAttribute("cantidad", cantidad);
+            model.addAttribute("responsable", responsable);
+            model.addAttribute("observacion", observacion);
+            model.addAttribute("proveedorId", proveedorId);
+            return "materiales/entrada-stock";
+        }
+
+        movimientoService.registrarEntrada(id, cantidad, observacion, responsable, proveedorId);
         flash.addFlashAttribute("exitoo", msg("mat.msg.entradaRegistrada", cantidad));
         return "redirect:/materiales";
     }

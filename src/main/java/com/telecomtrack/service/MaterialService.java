@@ -1,22 +1,49 @@
 package com.telecomtrack.service;
 
 import com.telecomtrack.domain.Material;
+import com.telecomtrack.repository.MaterialRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface MaterialService {
+@Service
+@Transactional
+public class MaterialService {
 
-    List<Material> listarTodos();
+    private final MaterialRepository materialRepository;
 
-    List<Material> listarConStockBajo();
+    public MaterialService(MaterialRepository materialRepository) {
+        this.materialRepository = materialRepository;
+    }
 
-    Optional<Material> buscarPorId(Long id);
+    @Transactional(readOnly = true)
+    public List<Material> listarTodos() {
+        return materialRepository.findAll();
+    }
 
-    Material guardar(Material material);
+    @Transactional(readOnly = true)
+    public List<Material> listarConStockBajo() {
+        return materialRepository.findMaterialesConStockBajo();
+    }
 
-    void eliminar(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Material> buscarPorId(Long id) {
+        return materialRepository.findById(id);
+    }
 
-    boolean existeCodigoUnico(String codigo);
+    public Material guardar(Material material) {
+        return materialRepository.save(material);
+    }
 
-    boolean existeCodigoUnicoExcluyendo(String codigo, Long id);
+    @Transactional(readOnly = true)
+    public boolean existeCodigoUnico(String codigo) {
+        return materialRepository.existsByCodigoUnico(codigo);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existeCodigoUnicoExcluyendo(String codigo, Long id) {
+        return materialRepository.existsByCodigoUnicoAndIdMaterialNot(codigo, id);
+    }
 }
