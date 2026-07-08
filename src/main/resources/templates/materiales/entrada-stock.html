@@ -27,7 +27,7 @@
                         <div class="row g-1 small">
                             <div class="col-5 text-muted" th:text="#{mat.entrada.info.material}">Material:</div>
                             <div class="col-7 fw-semibold" th:text="${material.nombre}"></div>
-                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.codigo}">Codigo:</div>
+                            <div class="col-5 text-muted" th:text="#{mat.entrada.info.codigo}">Código:</div>
                             <div class="col-7"><code th:text="${material.codigoUnico}"></code></div>
                             <div class="col-5 text-muted" th:text="#{mat.entrada.info.unidad}">Unidad:</div>
                             <div class="col-7" th:text="${material.unidadMedida}"></div>
@@ -44,15 +44,6 @@
                         </div>
                     </div>
 
-                    <div th:if="${exito}" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fa-solid fa-circle-check me-2"></i><span th:text="${exito}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fa-solid fa-circle-exclamation me-2"></i><span th:text="${error}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-
                     <form th:action="@{/materiales/{id}/entrada(id=${material.idMaterial})}" method="post">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
@@ -60,16 +51,42 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="number" name="cantidad" class="form-control form-control-lg"
-                                min="1" th:placeholder="#{mat.entrada.cantidad.placeholder}" required />
+                                th:classappend="${errorCantidad != null} ? ' is-invalid'"
+                                th:value="${cantidad}"
+                                min="1" th:placeholder="#{mat.entrada.cantidad.placeholder}" />
+                            <div class="invalid-feedback" th:if="${errorCantidad}" th:text="${errorCantidad}"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-semibold" th:text="#{mat.entrada.responsable}">Responsable</label>
+                            <label class="form-label fw-semibold">
+                                <span th:text="#{mat.entrada.responsable}">Responsable</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" name="responsable" class="form-control"
+                                th:classappend="${errorResponsable != null} ? ' is-invalid'"
+                                th:value="${responsable}"
                                 th:placeholder="#{mat.entrada.responsable.placeholder}" maxlength="100" />
+                            <div class="invalid-feedback" th:if="${errorResponsable}" th:text="${errorResponsable}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                <span th:text="#{mat.entrada.proveedor}">Proveedor</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select name="proveedorId" class="form-select"
+                                th:classappend="${errorProveedor != null} ? ' is-invalid'">
+                                <option value="" th:text="#{mat.entrada.proveedor.seleccionar}">-- Seleccione --</option>
+                                <option th:each="p : ${proveedores}"
+                                    th:value="${p.idProveedor}"
+                                    th:text="${p.nombre}"
+                                    th:selected="${proveedorId != null and proveedorId == p.idProveedor}">
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${errorProveedor}" th:text="${errorProveedor}"></div>
                         </div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold" th:text="#{mat.entrada.observacion}">Observacion</label>
+                            <label class="form-label fw-semibold" th:text="#{mat.entrada.observacion}">Observación</label>
                             <textarea name="observacion" class="form-control" rows="3"
+                                th:text="${observacion}"
                                 th:placeholder="#{mat.entrada.observacion.placeholder}"></textarea>
                         </div>
                         <div class="d-grid">
@@ -95,7 +112,7 @@
                 <div class="card-body p-0">
                     <div th:if="${#lists.isEmpty(movimientos)}" class="text-center py-5 text-muted">
                         <i class="fa-solid fa-inbox fa-2x mb-3 d-block"></i>
-                        <span th:text="#{mat.entrada.historial.vacio}">Sin movimientos registrados aun.</span>
+                        <span th:text="#{mat.entrada.historial.vacio}">Sin movimientos registrados aún.</span>
                     </div>
                     <div class="table-responsive" th:if="${not #lists.isEmpty(movimientos)}">
                         <table class="table table-sm table-hover align-middle mb-0">
@@ -105,17 +122,19 @@
                                     <th class="text-center" th:text="#{mat.entrada.historial.tipo}">Tipo</th>
                                     <th class="text-center" th:text="#{mat.entrada.historial.cantidad}">Cantidad</th>
                                     <th th:text="#{mat.entrada.historial.responsable}">Responsable</th>
-                                    <th th:text="#{mat.entrada.historial.observacion}">Observacion</th>
+                                    <th th:text="#{mat.entrada.historial.proveedor}">Proveedor</th>
+                                    <th th:text="#{mat.entrada.historial.observacion}">Observación</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="mov : ${movimientos}">
                                     <td class="small" th:text="${#temporals.format(mov.fecha, 'dd/MM/yyyy HH:mm')}"></td>
                                     <td class="text-center">
-                                        <span class="badge bg-success" th:text="${mov.tipo}"></span>
+                                        <span class="badge bg-success" th:text="#{movimiento.tipo.entrada}"></span>
                                     </td>
                                     <td class="text-center fw-bold" th:text="${mov.cantidad}"></td>
                                     <td class="small" th:text="${mov.responsable != null ? mov.responsable : '–'}"></td>
+                                    <td class="small" th:text="${mov.proveedor != null ? mov.proveedor.nombre : '–'}"></td>
                                     <td class="small text-muted"
                                         th:text="${mov.observacion != null ? mov.observacion : '–'}"></td>
                                 </tr>

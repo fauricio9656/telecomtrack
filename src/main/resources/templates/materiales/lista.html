@@ -84,15 +84,9 @@
                                     <i class="fa-solid fa-arrow-down"></i>
                                 </a>
                                 <a th:href="@{/materiales/editar/{id}(id=${m.idMaterial})}"
-                                   class="btn btn-sm btn-warning me-1"
+                                   class="btn btn-sm btn-warning"
                                    th:title="#{mat.btn.editar}">
                                     <i class="fa-solid fa-pencil"></i>
-                                </a>
-                                <a th:href="@{/materiales/eliminar/{id}(id=${m.idMaterial})}"
-                                   class="btn btn-sm btn-danger"
-                                   th:title="#{mat.btn.eliminar}"
-                                   th:attr="onclick=|return confirm('#{mat.confirm.eliminar}')|">
-                                    <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
